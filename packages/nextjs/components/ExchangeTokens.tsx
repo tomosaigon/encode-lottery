@@ -181,10 +181,10 @@ const ExchangeTokens = () => {
   return (
     <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
       <form className="mt-6">
-        <p className="text-base-200">Payment Token: {paymentTokenAddress}</p>
-        <p className="text-base-200">Balance: {tokenBalance ? formatEther(tokenBalance) : "0"}</p>
-        <p className="text-base-200">Approved: {tapprovedBalance ? formatEther(tapprovedBalance) : "0"}</p>
-        <label htmlFor="amount" className="text-base-200">
+        <p className="">Payment Token: {paymentTokenAddress}</p>
+        <p className="">Balance: {tokenBalance ? formatEther(tokenBalance) : "0"}</p>
+        <p className="">Approved: {tapprovedBalance ? formatEther(tapprovedBalance) : "0"}</p>
+        <label htmlFor="amount" className="">
           Enter Amount to Spend:
         </label>
         <input
@@ -208,7 +208,7 @@ const ExchangeTokens = () => {
             Buy
           </button>
         </div>
-        <label htmlFor="amount" className="text-base-200">
+        <label htmlFor="amount" className="">
           Enter Amount to Return:
         </label>
         <input
