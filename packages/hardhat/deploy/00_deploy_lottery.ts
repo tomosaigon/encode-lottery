@@ -28,7 +28,7 @@ const deployLottery: DeployFunction = async function (hre: HardhatRuntimeEnviron
   await deploy("Lottery", {
     from: deployer,
     // Contract constructor arguments
-    args: ["WBTC", "WBTC", 10000, 50, 1],
+    args: ["WBTC", "WBTC", 10000, hre.ethers.utils.parseEther("50"), hre.ethers.utils.parseEther("1")],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.

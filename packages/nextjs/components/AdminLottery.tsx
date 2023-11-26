@@ -33,7 +33,8 @@ const AdminLottery = () => {
     address: Lottery.address,
     abi: Lottery.abi,
     functionName: "openBets",
-    args: [BigInt(currentTimestamp + 10 * 60 * 1000)],
+    // args: [BigInt(currentTimestamp + 10 * 60 * 1000)],
+    args: [BigInt(parseInt("" + currentTimestamp / 1000) + 4 * 60)],
   });
 
   return (
@@ -41,7 +42,7 @@ const AdminLottery = () => {
       <p className="">Bets Open: {betsOpen ? "Yes" : "No"}</p>
       {!betsOpen && (
         <button type="button" className="btn btn-primary w-full mt-4" onClick={() => openBetsWrite()}>
-          Open Bets for 10 min
+          Open Bets for 4 min
         </button>
       )}
       {betsOpen && (
