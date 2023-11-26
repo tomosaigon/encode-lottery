@@ -146,7 +146,7 @@ contract Lottery is Ownable {
 		require(amount <= ownerPool, "Not enough fees collected");
 		ownerPool -= amount;
 		// TODO
-		paymentToken.transfer(owner(), amount);
+		paymentToken.transfer(msg.sender, amount);
 	}
 
 	/// @notice Burns `amount` tokens and give the equivalent ETH back to user
