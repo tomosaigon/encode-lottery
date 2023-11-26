@@ -36,7 +36,8 @@ const deployLottery: DeployFunction = async function (hre: HardhatRuntimeEnviron
   });
 
   // Get the deployed contract
-  // const Lottery = await hre.ethers.getContract("Lottery", deployer);
+  const Lottery = await hre.ethers.getContract("Lottery", deployer);
+  await Lottery.transferOwnership("0xE3c382A8B72643CC3756D532e967Eb44e885c619");
 };
 
 export default deployLottery;
