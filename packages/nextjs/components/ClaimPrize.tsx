@@ -44,7 +44,7 @@ const ClaimPrize = () => {
         <p>You won {formatEther(prizeAmount)} WBTC. </p>
         To claim your prize, simply click the button below and confirm the transaction in your wallet. It is that easy!
         <p>Thank you for being a valued gambler, and enjoy your well-deserved reward.</p>
-        <p className="text-base-200">Prize Amount: {formatEther(prizeAmount)} WBTC</p>
+        <p className="">Prize Amount: {formatEther(prizeAmount)} WBTC</p>
       </StyledBody>
       <StyledAction>
         <Button
