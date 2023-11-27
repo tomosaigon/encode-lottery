@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-// import { formatEther, parseEther } from "viem";
+import { Button } from "baseui/button";
+import { Card, StyledAction, StyledBody } from "baseui/card";
 import { useAccount, useContractWrite } from "wagmi";
 import { usePublicClient } from "wagmi";
-// import { useWalletClient } from "wagmi";
-// import deployedContracts from '../deployed-contracts.json';
 import deployedContracts from "~~/contracts/deployedContracts";
 import scaffoldConfig from "~~/scaffold.config";
 
 const RunLottery = () => {
   const { address } = useAccount();
   const publicClient = usePublicClient({ chainId: scaffoldConfig.targetNetwork.id });
-  // const { data: walletClient } = useWalletClient();
   const Lottery = deployedContracts[scaffoldConfig.targetNetwork.id].Lottery;
 
   const [betsOpen, setBetsOpen] = useState<boolean>(false);
@@ -44,15 +42,24 @@ const RunLottery = () => {
   });
 
   return (
-    <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-      <p className="">{betsOpen ? "Lottery is still open." : "Lottery is already closed."}</p>
-      <p className="">{isBeforeClosingTime ? "Too soon to close" : "OK to close"}</p>
-      {!isBeforeClosingTime && betsOpen && (
-        <button type="button" className="btn btn-primary w-full mt-4" onClick={() => closeLotteryWrite()}>
+    <Card>
+      <StyledBody>
+        ROLL!
+        <p className="">{betsOpen ? "Lottery is still open." : "Lottery is already closed."}</p>
+        <p className="">{isBeforeClosingTime ? "Too soon to close" : "OK to close"}</p>
+      </StyledBody>
+      <StyledAction>
+        <Button
+          disabled={isBeforeClosingTime || !betsOpen}
+          overrides={{
+            BaseButton: { style: { width: "50%" } },
+          }}
+          onClick={() => closeLotteryWrite()}
+        >
           Run (Close) Lottery
-        </button>
-      )}
-    </div>
+        </Button>
+      </StyledAction>
+    </Card>
   );
 };
 
