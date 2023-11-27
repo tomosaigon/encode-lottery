@@ -1,58 +1,56 @@
-import Link from "next/link";
+import { BlockProps } from "baseui/block";
+import { FlexGrid, FlexGridItem } from "baseui/flex-grid";
+import { MessageCard } from "baseui/message-card";
 import type { NextPage } from "next";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import AdminLottery from "~~/components/AdminLottery";
+import ClaimPrize from "~~/components/ClaimPrize";
+import ExchangeTokens from "~~/components/ExchangeTokens";
 import { MetaHeader } from "~~/components/MetaHeader";
+import PlaceBet from "~~/components/PlaceBet";
+import RunLottery from "~~/components/RunLottery";
+
+const itemProps: BlockProps = {
+  // backgroundColor: 'mono300',
+  // height: 'scale1000',
+  // display: 'flex',
+  // alignItems: 'center',
+  // justifyContent: 'center',
+};
 
 const Home: NextPage = () => {
   return (
     <>
       <MetaHeader />
       <div className="flex items-center flex-col flex-grow pt-10">
-        <div className="px-5">
-          <h1 className="text-center mb-8">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
-          </h1>
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/pages/index.tsx
-            </code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code>
-          </p>
+        <div className="m-10">
+          <MessageCard
+            heading="Welcome to Encode Club Lottery for Winners"
+            buttonLabel="YOLO"
+            onClick={() => alert("scroll down")}
+            paragraph="Spend your Ether now for a chance to win. YOLO!"
+            image={{
+              src: "https://images.unsplash.com/photo-1530789253388-582c481c54b0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80",
+              ariaLabel: "Image description",
+            }}
+          />
         </div>
+
+        <FlexGrid flexGridColumnCount={3} flexGridColumnGap="scale800" flexGridRowGap="scale800">
+          <FlexGridItem {...itemProps}>
+            <ExchangeTokens />
+          </FlexGridItem>
+          <FlexGridItem {...itemProps}>
+            <PlaceBet />
+          </FlexGridItem>
+          <FlexGridItem {...itemProps}>
+            <ClaimPrize />
+          </FlexGridItem>
+        </FlexGrid>
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
           <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contract
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
+            <RunLottery />
+            <AdminLottery />
           </div>
         </div>
       </div>
