@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 // base
 // import { Client as Styletron } from 'styletron-engine-monolithic';
 import { styletron } from "../styletron";
-import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
+import { RainbowKitProvider, lightTheme } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 // import { LightTheme, BaseProvider, styled } from 'baseui';
 import { BaseProvider, LightTheme } from "baseui";
@@ -12,7 +12,7 @@ import { Toaster } from "react-hot-toast";
 import { Provider as StyletronProvider } from "styletron-react";
 import { useDarkMode } from "usehooks-ts";
 import { WagmiConfig } from "wagmi";
-import { Footer } from "~~/components/Footer";
+// import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
 import { useNativeCurrencyPrice } from "~~/hooks/scaffold-eth";
@@ -36,7 +36,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
   const price = useNativeCurrencyPrice();
   const setNativeCurrencyPrice = useGlobalState(state => state.setNativeCurrencyPrice);
   // This variable is required for initial client side rendering of correct theme for RainbowKit
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
   const { isDarkMode } = useDarkMode();
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
       <RainbowKitProvider
         chains={appChains.chains}
         avatar={BlockieAvatar}
-        theme={isDarkTheme ? darkTheme() : lightTheme()}
+        theme={isDarkTheme ? lightTheme() : lightTheme()}
       >
         <StyletronProvider value={styletron}>
           <BaseProvider theme={LightTheme}>
@@ -66,7 +66,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
               <main className="relative flex flex-col flex-1">
                 <Component {...pageProps} />
               </main>
-              <Footer />
+              {/* <Footer /> */}
             </div>
             <Toaster />
             {/* </Centered> */}
