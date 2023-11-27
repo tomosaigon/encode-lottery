@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "baseui/button";
 import { Card, StyledAction, StyledBody } from "baseui/card";
 import { Input } from "baseui/input";
+import { formatEther, parseEther } from "viem";
 // import { formatEther, parseEther } from "viem";
 import { useAccount, useContractWrite } from "wagmi";
 import { usePublicClient } from "wagmi";
@@ -19,6 +20,7 @@ const AdminLottery = () => {
   const [betsOpen, setBetsOpen] = useState<boolean>(false);
   // const [closingTime, setClosingTime] = useState<number>(0);
   const [numberOfTokens, setNumberOfTokens] = useState<number>(0);
+  const [ownerPool, setOwnerPool] = useState(0n);
 
   useEffect(() => {
     (async () => {
@@ -28,6 +30,14 @@ const AdminLottery = () => {
         functionName: "betsOpen",
       });
       setBetsOpen(data);
+
+      setOwnerPool(
+        await publicClient.readContract({
+          address: Lottery.address,
+          abi: Lottery.abi,
+          functionName: "ownerPool",
+        }),
+      );
     })();
   }, [Lottery, address, publicClient]);
 
@@ -40,16 +50,22 @@ const AdminLottery = () => {
     args: [BigInt(parseInt("" + currentTimestamp / 1000) + 4 * 60)],
   });
 
+  const { write: ownerWithdrawWrite } = useContractWrite({
+    address: Lottery.address,
+    abi: Lottery.abi,
+    functionName: "ownerWithdraw",
+  });
+
   return (
     <>
-      <Card>
+      <Card overrides={{ Root: { style: { width: "100%" } } }} title="Open!">
         <StyledBody>
-          Open!
           <p className="">Bets Open: {betsOpen ? "Yes" : "No"}</p>
+          <p>The owner can start the lottery over if it is currently closed and ready. </p>
         </StyledBody>
         <StyledAction>
           <Button
-            disabled={!betsOpen}
+            disabled={betsOpen}
             overrides={{
               BaseButton: { style: { width: "100%" } },
             }}
@@ -59,9 +75,10 @@ const AdminLottery = () => {
           </Button>
         </StyledAction>
       </Card>
-      <Card>
+      <Card overrides={{ Root: { style: { width: "100%" } } }} title="Withdraw!">
         <StyledBody>
-          Withdraw!
+          <p>The owner can collect from the owner pool after lotteries have closed. </p>
+          <p>Owner Pool: {formatEther(ownerPool)} WBTC. </p>
           <label htmlFor="numberOfTokens" className="">
             Number of Tokens:
           </label>
@@ -74,9 +91,12 @@ const AdminLottery = () => {
         </StyledBody>
         <StyledAction>
           <Button
-          // onClick={handleWithdrawTokens}
+            overrides={{
+              BaseButton: { style: { width: "100%" } },
+            }}
+            onClick={() => ownerWithdrawWrite?.({ args: [parseEther(numberOfTokens.toString())] })}
           >
-            TODO Withdraw Tokens
+            Withdraw Tokens
           </Button>
         </StyledAction>
       </Card>
