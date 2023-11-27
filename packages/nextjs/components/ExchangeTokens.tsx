@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Button } from "baseui/button";
+import { Card, StyledAction, StyledBody } from "baseui/card";
+import { Input } from "baseui/input";
 import { formatEther, parseEther } from "viem";
 import { useAccount, useContractWrite } from "wagmi";
 import { usePublicClient } from "wagmi";
@@ -177,27 +180,32 @@ const ExchangeTokens = () => {
     });
     await walletClient.writeContract(request);
   };
-
+  // <div className="flex flex-col bg-base-100 px-10 py-10 max-w-xs rounded-3xl">
+  // <div className="flex flex-col bg-base-100 px-10 py-10  ">
   return (
-    <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-      <form className="mt-6">
-        <p className="">Payment Token: {paymentTokenAddress}</p>
-        <p className="">Balance: {tokenBalance ? formatEther(tokenBalance) : "0"}</p>
-        <p className="">Approved: {tapprovedBalance ? formatEther(tapprovedBalance) : "0"}</p>
-        <label htmlFor="amount" className="">
-          Enter Amount to Spend:
-        </label>
-        <input
-          type="number"
-          id="spentAmount"
-          className="input input-primary mt-2"
-          value={spendAmount}
-          onChange={e => setSpendAmount(Number(e.target.value))}
-        />
-        <div className="mt-4 space-x-4">
-          <button
-            type="button"
-            className="btn btn-primary"
+    <>
+      <Card>
+        <StyledBody>
+          Spend your Ether now to acquire our exclusive payment tokens. Just input the desired amount then confirm the
+          transaction in your wallet.
+          <p className="">Payment Token (WBTC): {paymentTokenAddress}</p>
+          <p className="">Balance: {tokenBalance ? formatEther(tokenBalance) : "0"}</p>
+          <p className="">Approved: {tapprovedBalance ? formatEther(tapprovedBalance) : "0"}</p>
+          <label htmlFor="amount" className="">
+            Ether Amount to Spend:
+          </label>
+          <Input
+            type="number"
+            id="spentAmount"
+            value={spendAmount}
+            onChange={e => setSpendAmount(Number(e.target.value))}
+          />
+        </StyledBody>
+        <StyledAction>
+          <Button
+            overrides={{
+              BaseButton: { style: { width: "100%" } },
+            }}
             disabled={!purchaseTokensWrite}
             onClick={() =>
               purchaseTokensWrite?.({
@@ -206,25 +214,31 @@ const ExchangeTokens = () => {
             }
           >
             Buy
-          </button>
-        </div>
-        <label htmlFor="amount" className="">
-          Enter Amount to Return:
-        </label>
-        <input
-          type="number"
-          id="amount"
-          className="input input-primary mt-2"
-          value={amount}
-          onChange={e => setAmount(Number(e.target.value))}
-        />
-        <div className="mt-4 space-x-4">
-          <button type="button" className="btn btn-secondary" onClick={approveWrite}>
+          </Button>
+        </StyledAction>
+      </Card>
+
+      <Card>
+        <StyledBody>
+          Redeem your payment tokens and convert them back into Ether after approval.
+          <label htmlFor="amount" className="">
+            Enter Amount to Redeem:
+          </label>
+          <Input type="number" id="amount" value={amount} onChange={e => setAmount(Number(e.target.value))} />
+        </StyledBody>
+        <StyledAction>
+          <Button
+            overrides={{
+              BaseButton: { style: { width: "50%" } },
+            }}
+            onClick={approveWrite}
+          >
             Approve
-          </button>
-          <button
-            type="button"
-            className="btn btn-secondary"
+          </Button>
+          <Button
+            overrides={{
+              BaseButton: { style: { width: "50%" } },
+            }}
             disabled={!returnTokensWrite}
             onClick={() =>
               returnTokensWrite?.({
@@ -232,11 +246,11 @@ const ExchangeTokens = () => {
               })
             }
           >
-            Return
-          </button>
-        </div>
-      </form>
-    </div>
+            Redeem
+          </Button>
+        </StyledAction>
+      </Card>
+    </>
   );
 };
 
