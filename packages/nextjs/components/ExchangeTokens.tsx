@@ -220,7 +220,7 @@ const ExchangeTokens = () => {
 
       <Card>
         <StyledBody>
-          Redeem your payment tokens and convert them back into Ether after approval.
+          <p>Redeem your payment tokens and convert them back into Ether after approval.</p>
           <label htmlFor="amount" className="">
             Enter Amount to Redeem:
           </label>
