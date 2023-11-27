@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Button } from "baseui/button";
+import { Card, StyledAction, StyledBody } from "baseui/card";
+import { Input } from "baseui/input";
 import { formatEther } from "viem";
 import { useAccount, useContractWrite } from "wagmi";
 import { usePublicClient } from "wagmi";
@@ -142,8 +145,9 @@ const PlaceBet = () => {
   }, [Lottery, address, publicClient]);
 
   return (
-    <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-      <div className="mb-4">
+    <Card>
+      <StyledBody>
+        BET!
         <p>Purchase Ratio: {purchaseRatio.toString()}</p>
         <p>Bet Price: {formatEther(betPrice)}</p>
         <p>Bet Fee: {formatEther(betFee)}</p>
@@ -151,32 +155,35 @@ const PlaceBet = () => {
         <p>Owner Pool: {formatEther(ownerPool)}</p>
         <p>Bets Open: {betsOpen ? "Yes" : "No"}</p>
         <p>Bets Closing Time: {new Date(1000 * Number(betsClosingTime)).toLocaleString()}</p>
-      </div>
-      <form className="space-y-4">
-        <div className="flex items-center space-x-4">
-          <label htmlFor="numberOfTimes" className="">
-            Number of Times to Bet:
-          </label>
-          <input
-            type="number"
-            id="numberOfTimes"
-            className="input input-primary"
-            value={numberOfTimes}
-            onChange={e => setNumberOfTimes(Number(e.target.value))}
-          />
-        </div>
-        <button type="button" className="btn btn-primary w-full" onClick={() => approveWrite()}>
+        <label htmlFor="numberOfTimes" className="">
+          Number of Times to Bet:
+        </label>
+        <Input
+          type="number"
+          id="numberOfTimes"
+          value={numberOfTimes}
+          onChange={e => setNumberOfTimes(Number(e.target.value))}
+        />
+      </StyledBody>
+      <StyledAction>
+        <Button
+          overrides={{
+            BaseButton: { style: { width: "50%" } },
+          }}
+          onClick={() => approveWrite()}
+        >
           Approve {formatEther((betPrice + betFee) * BigInt(numberOfTimes))}
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary w-full"
+        </Button>
+        <Button
+          overrides={{
+            BaseButton: { style: { width: "50%" } },
+          }}
           onClick={() => betManyWrite?.({ args: [BigInt(numberOfTimes)] })}
         >
           Place Bet
-        </button>
-      </form>
-    </div>
+        </Button>
+      </StyledAction>
+    </Card>
   );
 };
 
