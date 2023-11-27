@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Button } from "baseui/button";
+import { Card, StyledAction, StyledBody } from "baseui/card";
+import { Input } from "baseui/input";
 // import { formatEther, parseEther } from "viem";
 import { useAccount, useContractWrite } from "wagmi";
 import { usePublicClient } from "wagmi";
@@ -38,35 +41,46 @@ const AdminLottery = () => {
   });
 
   return (
-    <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-      <p className="">Bets Open: {betsOpen ? "Yes" : "No"}</p>
-      {!betsOpen && (
-        <button type="button" className="btn btn-primary w-full mt-4" onClick={() => openBetsWrite()}>
-          Open Bets for 4 min
-        </button>
-      )}
-      {betsOpen && (
-        <div className="mt-4 space-y-4">
+    <>
+      <Card>
+        <StyledBody>
+          Open!
+          <p className="">Bets Open: {betsOpen ? "Yes" : "No"}</p>
+        </StyledBody>
+        <StyledAction>
+          <Button
+            disabled={!betsOpen}
+            overrides={{
+              BaseButton: { style: { width: "100%" } },
+            }}
+            onClick={() => openBetsWrite()}
+          >
+            Open Bets for 4 min
+          </Button>
+        </StyledAction>
+      </Card>
+      <Card>
+        <StyledBody>
+          Withdraw!
           <label htmlFor="numberOfTokens" className="">
             Number of Tokens:
           </label>
-          <input
+          <Input
             type="number"
             id="numberOfTokens"
-            className="input input-primary"
             value={numberOfTokens}
             onChange={e => setNumberOfTokens(Number(e.target.value))}
           />
-          <button
-            type="button"
-            className="btn btn-secondary w-full"
-            // onClick={handleWithdrawTokens}
+        </StyledBody>
+        <StyledAction>
+          <Button
+          // onClick={handleWithdrawTokens}
           >
             TODO Withdraw Tokens
-          </button>
-        </div>
-      )}
-    </div>
+          </Button>
+        </StyledAction>
+      </Card>
+    </>
   );
 };
 
