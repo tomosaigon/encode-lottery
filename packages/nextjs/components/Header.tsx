@@ -1,10 +1,13 @@
-import React, { useCallback, useRef, useState } from "react";
-import Image from "next/image";
+// import React, { useCallback, useRef, useState } from "react";
+import React from "react";
+// import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
+// import { useOutsideClick } from "~~/hooks/scaffold-eth";
+import { ALIGN, HeaderNavigation, StyledNavigationItem, StyledNavigationList } from "baseui/header-navigation";
+import { StyledLink } from "baseui/link";
+// import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
-import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
 interface HeaderMenuLink {
   label: string;
@@ -20,7 +23,7 @@ export const menuLinks: HeaderMenuLink[] = [
   {
     label: "Debug Contracts",
     href: "/debug",
-    icon: <BugAntIcon className="h-4 w-4" />,
+    // icon: <BugAntIcon className="h-4 w-4" />,
   },
 ];
 
@@ -54,15 +57,41 @@ export const HeaderMenuLinks = () => {
  * Site header
  */
 export const Header = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const burgerMenuRef = useRef<HTMLDivElement>(null);
-  useOutsideClick(
-    burgerMenuRef,
-    useCallback(() => setIsDrawerOpen(false), []),
-  );
+  // const router = useRouter();
+
+  // const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  // const burgerMenuRef = useRef<HTMLDivElement>(null);
+  // useOutsideClick(
+  //   burgerMenuRef,
+  //   useCallback(() => setIsDrawerOpen(false), []),
+  // );
 
   return (
-    <div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-secondary px-0 sm:px-2">
+    <div>
+      <HeaderNavigation>
+        <StyledNavigationList $align={ALIGN.left}>
+          <StyledNavigationItem>Encode Club Lottery</StyledNavigationItem>
+        </StyledNavigationList>
+        <StyledNavigationList $align={ALIGN.center} />
+        <StyledNavigationList $align={ALIGN.right}>
+          {menuLinks.map(({ label, href }) => {
+            // const isActive = router.pathname === href;
+            return (
+              <StyledNavigationItem key={label}>
+                <StyledLink href={href}>{label}</StyledLink>
+              </StyledNavigationItem>
+            );
+          })}
+        </StyledNavigationList>
+        <StyledNavigationList $align={ALIGN.right}>
+          <StyledNavigationItem>
+            {/* <Button>Get started</Button> */}
+            <RainbowKitCustomConnectButton />
+            <FaucetButton />
+          </StyledNavigationItem>
+        </StyledNavigationList>
+      </HeaderNavigation>
+      {/* <div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-secondary px-0 sm:px-2">
       <div className="navbar-start w-auto lg:w-1/2">
         <div className="lg:hidden dropdown" ref={burgerMenuRef}>
           <label
@@ -103,6 +132,7 @@ export const Header = () => {
         <RainbowKitCustomConnectButton />
         <FaucetButton />
       </div>
+    </div> */}
     </div>
   );
 };
