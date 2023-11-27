@@ -42,9 +42,8 @@ const RunLottery = () => {
   });
 
   return (
-    <Card>
+    <Card overrides={{ Root: { style: { width: "50%" } } }} title="ROLL!">
       <StyledBody>
-        ROLL!
         <p className="">{betsOpen ? "Lottery is still open." : "Lottery is already closed."}</p>
         <p className="">{isBeforeClosingTime ? "Too soon to close" : "OK to close"}</p>
       </StyledBody>

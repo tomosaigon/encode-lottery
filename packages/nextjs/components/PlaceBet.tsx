@@ -145,9 +145,14 @@ const PlaceBet = () => {
   }, [Lottery, address, publicClient]);
 
   return (
-    <Card>
+    <Card
+      overrides={{ Root: { style: { width: "100%" } } }}
+      // headerImage={
+      //   'https://source.unsplash.com/user/erondu/700x400'
+      // }
+      title="BET!"
+    >
       <StyledBody>
-        BET!
         <p>Purchase Ratio: {purchaseRatio.toString()}</p>
         <p>Bet Price: {formatEther(betPrice)}</p>
         <p>Bet Fee: {formatEther(betFee)}</p>

@@ -38,7 +38,13 @@ const ClaimPrize = () => {
   });
 
   return (
-    <Card>
+    <Card
+      overrides={{ Root: { style: { width: "100%" } } }}
+      // headerImage={
+      //   'https://source.unsplash.com/user/erondu/700x400'
+      // }
+      title="Congratulations on being a winner!!"
+    >
       <StyledBody>
         Congratulations on being a winner!
         <p>You won {formatEther(prizeAmount)} WBTC. </p>
